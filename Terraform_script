@@ -2,19 +2,19 @@ pipeline {
     agent any
     environment {
         // Make sure to set your AWS credentials ID
-        AWS_CREDENTIALS_ID = 'aws-credentials'
-        TERRAFORM_DIR = 'C:\\Path\\To\\Terraform\\Directory'
+        AWS_CREDENTIALS_ID = 'Terraform_jenkins_configure'
+        TERRAFORM_DIR = 'C:\Terraform to Jenkins'
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-repo/terraform-repo.git'
+                git branch: 'main', url: 'https://github.com/prakashdevops93/terraform-to-jenkins'
             }
         }
         stage('Terraform Init') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${AWS_CREDENTIALS_ID}"]]) {
-                    dir("${TERRAFORM_DIR}") {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${Terraform_jenkins_configure}"]]) {
+                    dir("${C:\Terraform to Jenkins}") {
                         bat 'terraform init'
                     }
                 }
@@ -22,8 +22,8 @@ pipeline {
         }
         stage('Terraform Plan') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${AWS_CREDENTIALS_ID}"]]) {
-                    dir("${TERRAFORM_DIR}") {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${Terraform_jenkins_configure}"]]) {
+                    dir("${C:\Terraform to Jenkins}") {
                         bat 'terraform plan -out=tfplan'
                     }
                 }
@@ -31,8 +31,8 @@ pipeline {
         }
         stage('Terraform Apply') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${AWS_CREDENTIALS_ID}"]]) {
-                    dir("${TERRAFORM_DIR}") {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${Terraform_jenkins_configure}"]]) {
+                    dir("${C:\Terraform to Jenkins}") {
                         bat 'terraform apply -auto-approve tfplan'
                     }
                 }
